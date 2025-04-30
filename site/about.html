@@ -1,25 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проектная практика</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>О проекте — CareSync</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>CareSync</h1>
-        <nav>
-            <a href="index.html">Домой</a>
-            <a href="about.html">О проекте</a>
-            <a href="members.html">Участники</a>
-            <a href="journal.html">Журнал</a>
-            <a href="resources.html">Ресурсы</a>
-        </nav>
-    </header>
+
+<header>
+    <h1>CareSync</h1>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О проекте</a>
+        <a href="members.html">Участники</a>
+        <a href="journal.html">Журнал</a>
+        <a href="resources.html">Ресурсы</a>
+    </nav>
+</header>
+
+<main>
     <section>
         <h2>О проекте</h2>
+        <p class="textbox">
+            CareSync — это инновационная платформа для сбора, обработки и передачи медицинских данных из персональных устройств пациентов в клиники. Она помогает врачам получать актуальную информацию о состоянии здоровья пациентов, ускоряет процесс диагностики и повышает качество лечения.
+        </p>
     </section>
-    
+
+    <section>
+        <h3>Что делает CareSync?</h3>
+        <p class="textbox">
+            Платформа интегрируется с <em>Google Fit API</em> и другими популярными сервисами, обеспечивая сбор информации о пульсе, активности, сне и других показателях. 
+            Алгоритмы искусственного интеллекта анализируют данные, выявляют потенциальные риски и формируют рекомендации для врачей.
+        </p>
+        <p class="textbox">
+            Пользователи получают интуитивный интерфейс для подключения устройств, просмотра истории данных и получения советов. 
+            Врачи могут быстро ознакомиться с ключевыми показателями пациента из электронной карты, что экономит время и улучшает качество помощи.
+        </p>
+    </section>
+
+    <section>
+        <h3>Преимущества платформы</h3>
+        <div class="columns">
+            <div class="column">
+                <img src="images/flexable.png" alt="Интерфейс">
+                <p>Приятный интерфейс</p>
+            </div>
+            <div class="column">
+                <img src="images/googlefit.jpg" alt="Google Fit">
+                <p>Интеграция с Google Fit</p>
+            </div>
+            <div class="column">
+                <img src="images/AI.png" alt="Искусственный интеллект">
+                <p>Помощь искусственного интеллекта</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Как работает система?</h3>
+        <ol class="steps">
+            <li>Пациент подключает своё устройство к приложению CareSync.</li>
+            <li>Данные автоматически собираются и анализируются.</li>
+            <li>Информация передаётся на защищённый сервер.</li>
+            <li>Врачи получают доступ к данным через интерфейс клиники.</li>
+            <li>Врачи принимают обоснованные решения на основе данных.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h3>Архитектура системы</h3>
+        <p style="text-align: center; font-weight: bold;">Устройство → Приложение CareSync → Сервер → Клиника</p>
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 CareSync. Все права защищены.
+</footer>
+
 </body>
 </html>

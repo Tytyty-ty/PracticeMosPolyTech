@@ -1,24 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проектная практика</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Журнал работы — CareSync</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>CareSync</h1>
-        <nav>
-            <a href="index.html">Домой</a>
-            <a href="about.html">О проекте</a>
-            <a href="members.html">Участники</a>
-            <a href="journal.html">Журнал</a>
-            <a href="resources.html">Ресурсы</a>
-        </nav>
-    </header>
+
+<header>
+    <h1>CareSync</h1>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О проекте</a>
+        <a href="members.html">Участники</a>
+        <a href="journal.html">Журнал</a>
+        <a href="resources.html">Ресурсы</a>
+    </nav>
+</header>
+
+<main>
     <section>
         <h2>Журнал работы</h2>
+        <p class="textbox">Здесь представлен поэтапный план разработки проекта CareSync.</p>
     </section>
+
+    <section class="roadmap">
+
+        <!-- Неделя 1 -->
+        <div class="week">
+            <h3>Неделя 1: Проектирование и подготовка</h3>
+            <img src="images/week1.png" alt="Неделя 1" class="roadmap-image">
+            <ul>
+                <li><strong>Дизайнер:</strong> Проработка макетов авторизации, панелей пациента и компании, согласование дизайна</li>
+                <li><strong>Фронтендер:</strong> Настройка проекта, базовые роуты, формы авторизации, начало дашборда</li>
+                <li><strong>Бэкендер:</strong> Проектирование базы данных, API авторизации, настройка PostgreSQL</li>
+            </ul>
+        </div>
+
+        <!-- Неделя 2 -->
+        <div class="week">
+            <h3>Неделя 2: Личный кабинет пациента</h3>
+            <img src="images/week2.png" alt="Неделя 2" class="roadmap-image">
+            <ul>
+                <li><strong>Дизайнер:</strong> UI личного кабинета, экран подключения устройств</li>
+                <li><strong>Фронтендер:</strong> Экран кабинета пациента, интеграция Google Fit API, подключение устройств</li>
+                <li><strong>Бэкендер:</strong> Эндпоинты и хранение данных здоровья, API для устройств</li>
+            </ul>
+        </div>
+
+        <!-- Неделя 3 -->
+        <div class="week">
+            <h3>Неделя 3: Панель компании</h3>
+            <img src="images/week3.png" alt="Неделя 3" class="roadmap-image">
+            <ul>
+                <li><strong>Дизайнер:</strong> UI панели компаний (список пациентов, разрешения)</li>
+                <li><strong>Фронтендер:</strong> Реализация панели компаний, таблица пациентов, запросы на доступ</li>
+                <li><strong>Бэкендер:</strong> API компаний и управления разрешениями</li>
+            </ul>
+        </div>
+
+        <!-- Неделя 4 -->
+        <div class="week">
+            <h3>Неделя 4: Аналитика и интеграции</h3>
+            <img src="images/week4.png" alt="Неделя 4" class="roadmap-image">
+            <ul>
+                <li><strong>Дизайнер:</strong> Дизайн аналитики (графики, уведомления)</li>
+                <li><strong>Фронтендер:</strong> Отображение аналитики и предупреждений</li>
+                <li><strong>Бэкендер:</strong> Анализ данных, уведомления на основе рисков</li>
+            </ul>
+        </div>
+
+        <!-- Неделя 5 -->
+        <div class="week">
+            <h3>Неделя 5: Тестирование и отладка</h3>
+            <img src="images/week5.png" alt="Неделя 5" class="roadmap-image">
+            <ul>
+                <li><strong>Дизайнер:</strong> Финальные исправления UI/UX</li>
+                <li><strong>Фронтендер:</strong> Исправление багов, тестирование API</li>
+                <li><strong>Бэкендер:</strong> Оптимизация API, финальные тесты</li>
+            </ul>
+        </div>
+
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 CareSync. Все права защищены.
+</footer>
+
 </body>
 </html>
