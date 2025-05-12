@@ -16,9 +16,9 @@
 
 Вариативная часть задания расположена в папке src:
 
-- C++: How to Create a Compiler
+- Python: Let’s Build A Simple Interpreter
 
-[Ознакомиться с видеоматериалом из codecrafters.io](https://www.youtube.com/watch?v=eF9qWbuQLuw)
+[Ознакомиться с материалом из codecrafters.io](https://ruslanspivak.com/lsbasi-part1/)
 
 
 ## Ответственный по проектной (учебной) практике
