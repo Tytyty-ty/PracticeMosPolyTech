@@ -1000,7 +1000,16 @@ class SemanticAnalyzer(NodeVisitor):
 
     def visit_Var(self, node):
         var_name = node.value
-        var_symbol = self.current_scope.lookup(var_name)
+        var_symbol = self.current_scope.lookup(var_name, current_scope_only=True)
+
+        if var_symbol is None:
+            global_scope = self.current_scope.enclosing_scope
+            while global_scope is not None and var_symbol is None:
+                var_symbol = global_scope.lookup(var_name, current_scope_only=True)
+                if var_symbol:
+                    print(f"Warning: variable '{var_name}' uses out of local scope.")
+                global_scope = global_scope.enclosing_scope
+
         if var_symbol is None:
             self.error(error_code=ErrorCode.ID_NOT_FOUND, token=node.token)
 
