@@ -43,6 +43,7 @@ class SemanticError(Error):
 
 class TokenType(Enum):
     # single-character token types
+    EQUAL         = '='
     PLUS          = '+'
     MINUS         = '-'
     MUL           = '*'
@@ -60,6 +61,13 @@ class TokenType(Enum):
     INTEGER_DIV   = 'DIV'
     VAR           = 'VAR'
     PROCEDURE     = 'PROCEDURE'
+    IF = 'IF'
+    THEN = 'THEN'
+    ELSE = 'ELSE'
+    WHILE = 'WHILE'
+    DO = 'DO'
+    REPEAT = 'REPEAT'
+    UNTIL = 'UNTIL'
     BEGIN         = 'BEGIN'
     END           = 'END'      # marks the end of the block
     # misc
@@ -124,7 +132,7 @@ def _build_reserved_keywords():
     return reserved_keywords
 
 
-RESERVED_KEYWORDS = _build_reserved_keywords()
+RESERVED_KEYWORDS = _build_reserved_keywords()\
 
 
 class Lexer:
@@ -257,6 +265,11 @@ class Lexer:
                 self.advance()
                 return token
 
+            if self.current_char == '=':
+                token = Token(TokenType.EQUAL, TokenType.EQUAL.value, lineno=self.lineno, column=self.column)
+                self.advance()
+                return token
+
             # single-character token
             try:
                 # get enum member by value, e.g.
@@ -377,6 +390,25 @@ class ProcedureCall(AST):
         self.token = token
         # a reference to procedure declaration symbol
         self.proc_symbol = None
+
+
+class If(AST):
+    def __init__(self, condition, true_branch, false_branch=None):
+        self.condition = condition
+        self.true_branch = true_branch
+        self.false_branch = false_branch
+
+
+class While(AST):
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body
+
+
+class RepeatUntil(AST):
+    def __init__(self, body, condition):
+        self.body = body
+        self.condition = condition
 
 
 class Parser:
@@ -574,6 +606,12 @@ class Parser:
               self.lexer.current_char == '('
         ):
             node = self.proccall_statement()
+        elif self.current_token.type == TokenType.IF:
+            return self.if_statement()
+        elif self.current_token.type == TokenType.WHILE:
+            return self.while_statement()
+        elif self.current_token.type == TokenType.REPEAT:
+            return self.repeat_statement()
         elif self.current_token.type == TokenType.ID:
             node = self.assignment_statement()
         else:
@@ -617,6 +655,31 @@ class Parser:
         node = Assign(left, token, right)
         return node
 
+    def if_statement(self):
+        self.eat(TokenType.IF)
+        condition = self.comparison_expr()
+        self.eat(TokenType.THEN)
+        true_branch = self.statement()
+        false_branch = None
+        if self.current_token.type == TokenType.ELSE:
+            self.eat(TokenType.ELSE)
+            false_branch = self.statement()
+        return If(condition, true_branch, false_branch)
+
+    def while_statement(self):
+        self.eat(TokenType.WHILE)
+        condition = self.comparison_expr()
+        self.eat(TokenType.DO)
+        body = self.statement()
+        return While(condition, body)
+
+    def repeat_statement(self):
+        self.eat(TokenType.REPEAT)
+        body = self.statement_list()
+        self.eat(TokenType.UNTIL)
+        condition = self.expr()
+        return RepeatUntil(body, condition)
+
     def variable(self):
         """
         variable : ID
@@ -644,6 +707,14 @@ class Parser:
 
             node = BinOp(left=node, op=token, right=self.term())
 
+        return node
+
+    def comparison_expr(self):
+        node = self.expr()
+        while self.current_token.type == TokenType.EQUAL:
+            token = self.current_token
+            self.eat(TokenType.EQUAL)
+            node = BinOp(left=node, op=token, right=self.expr())
         return node
 
     def term(self):
@@ -772,6 +843,23 @@ class NodeVisitor:
 
     def generic_visit(self, node):
         raise Exception('No visit_{} method'.format(type(node).__name__))
+
+    def visit_If(self, node):
+        if self.visit(node.condition):
+            self.visit(node.true_branch)
+        elif node.false_branch is not None:
+            self.visit(node.false_branch)
+
+    def visit_While(self, node):
+        while self.visit(node.condition):
+            self.visit(node.body)
+
+    def visit_RepeatUntil(self, node):
+        while True:
+            for stmt in node.body:
+                self.visit(stmt)
+            if self.visit(node.condition):
+                break
 
 
 ###############################################################################
@@ -1027,7 +1115,6 @@ class SemanticAnalyzer(NodeVisitor):
         # accessed by the interpreter when executing procedure call
         node.proc_symbol = proc_symbol
 
-
 ###############################################################################
 #                                                                             #
 #  INTERPRETER                                                                #
@@ -1149,6 +1236,8 @@ class Interpreter(NodeVisitor):
             return self.visit(node.left) // self.visit(node.right)
         elif node.op.type == TokenType.FLOAT_DIV:
             return float(self.visit(node.left)) / float(self.visit(node.right))
+        elif node.op.type == TokenType.EQUAL:
+            return self.visit(node.left) == self.visit(node.right)
         return None
 
     def visit_Num(self, node):
